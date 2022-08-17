@@ -391,7 +391,6 @@ if __name__ == '__main__':
                     print(f"{Fore.MAGENTA}")
                     os.system(f"pyinstaller --onefile --clean {fname} {f'-i {iname}' if iname != '' else ''} > nul")
                     finname = f"{arguments.out}.exe"
-                    os.system(f'cmd /c python st.py -t "{mainfold}\{fname.replace(".py",".exe")}" -i "{sing_file}" -o {finname} > nul')
             Main().main()
             print(f"{Fore.GREEN}\n[+] Crypted Successfully !")
 
