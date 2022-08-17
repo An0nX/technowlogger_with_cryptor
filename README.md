@@ -293,9 +293,4 @@ Result will be displayed on the Command prompt after every 10 seconds
 
 * All Contributors are welcome, this repo needs contributors who will improve this tool to make it best.
 
-## TODO
-
-- [ ] Add New features
-- [ ] Contribute GUI Version
-
 ## More Features Coming Soon...
