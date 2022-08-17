@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/PushpenderIndia/technowlogger/blob/master/img/hacker-gif.gif" alt="Hacker GIF" width=200 height=200/>
+  <img src="https://github.com/httpshotmaker/technowlogger_with_cryptor/blob/master/img/hacker-gif.gif" alt="Hacker GIF" width=200 height=200/>
 </p>
              
                         This small python script can do really awesome work.
