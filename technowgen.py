@@ -279,6 +279,7 @@ if __name__ == '__main__':
        
         
     try:
+        print(f'{Fore.RED}')
         print(banners.get_banner())
         print(f"\t\t{Fore.YELLOW}Author: {Fore.GREEN}Pushpender | {Fore.YELLOW}GitHub: {Fore.GREEN}@PushpenderIndia")
         print(f"\t\t{Fore.YELLOW}Modded by: {Fore.GREEN}httpshotmaker | {Fore.YELLOW}GitHub: {Fore.GREEN}@httpshotmaker\n")
