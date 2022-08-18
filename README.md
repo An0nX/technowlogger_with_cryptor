@@ -178,6 +178,7 @@ Note: You can also use our custom icons from the icon folder, just use them like
 | ----------  | --------- | ----------- |
 |             | --icon ICON   | Specify Icon Path, Icon of Evil File [**Note : Must Be .ico**] |
 | -b BIND     | --bind FILE   | Specify the path to the legitimate file. |
+| -j JOINER     | --joiner BOOL   | Specify whether to start stitching a legitimate file with a virus. |
 | -e EMAIL    | --email EMAIL | Email address to send reports to. |
 | -p PASSWORD | --password PASSWORD | Password for the email address given in the -e argument. |
 | -o OUT      | --out OUT    | Output file name.|
