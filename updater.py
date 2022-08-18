@@ -10,6 +10,17 @@ def update_client_version(version):
         vers = vnum.read()
         if vnum.read() != version:
             return True
+            vers.replace('\n','')
+            vers.replace('\r','')
+            first, second = vers.split('.')
+            if second != 9:
+                with open("version.txt", "w") as j:
+                    j.write(f'{first}.{second}')
+            else:
+                second = 0
+                first += 1
+                with open("version.txt", "w") as j:
+                    j.write(f'{first}.{second}')
         else:
             return False
 
@@ -24,17 +35,6 @@ def main():
         
     if update_client_version(version) is True:
         subprocess.call(["git", "pull", "origin", "master"])
-        vers.replace('\n','')
-        vers.replace('\r','')
-        first, second = vers.split('.')
-        if second != 9:
-            with open("version.txt", "w") as j:
-                j.write(f'{first}.{second}')
-        else:
-            second = 0
-            first += 1
-            with open("version.txt", "w") as j:
-                j.write(f'{first}.{second}')
         return f"{Fore.GREEN}[+] Updated to latest version: v{version}.."
     else:
         return f"{Fore.GREEN}[*] You are already up to date with git origin master :)"
