@@ -4,6 +4,7 @@ import banners
 import time
 from colorama import init
 from colorama import Fore, Back, Style
+import random
 
 def update_client_version(version):
     with open("version.txt", "r") as vnum:
@@ -23,6 +24,9 @@ def main():
         
     if update_client_version(version) is True:
         subprocess.call(["git", "pull", "origin", "master"])
+        subprocess.call(["git", "add", "."])
+        id = random.randint(1, 9999999999)
+        subprocess.call(["git", "commit", "-m", f"update_{id}"])
         return f"{Fore.GREEN}[+] Updated to latest version: v{version}..\n[*] Update version.txt"
     else:
         return f"{Fore.GREEN}[*] You are already up to date with git origin master :)"
