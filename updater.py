@@ -2,6 +2,8 @@ import subprocess
 from urllib.request import urlopen
 import banners
 import time
+from colorama import init
+from colorama import Fore, Back, Style
 
 def update_client_version(version):
     with open("version.txt", "r") as vnum:
@@ -14,26 +16,27 @@ def main():
     try:
         version = urlopen("https://raw.githubusercontent.com/httpshotmaker/technowlogger_with_cryptor/master/version.txt").read()
     except Exception as e:
-        print("[!] Unable to Fletch Origin version.txt")
+        print(f"{Fore.RED}[!] Unable to Fletch Origin version.txt")
         print("[!] Please Check Your Internet Connection!")
         print("[*] Exiting ...")
         quit()
         
     if update_client_version(version) is True:
         subprocess.call(["git", "pull", "origin", "master"])
-        return "[+] Updated to latest version: v{}..".format(version)
+        return f"{Fore.GREEN}[+] Updated to latest version: v{}..".format(version)
     else:
-        return "[*] You are already up to date with git origin master :)"
+        return f"{Fore.GREEN}[*] You are already up to date with git origin master :)"
 
 
 if __name__ == '__main__':
+    print(f'{Fore.RED}')
     print(banners.get_banner())
     print("\t\tAuthor: httpshotmaker | Github: github.com/httpshotmaker\n")
     print("[*] Welcome to Technowlogger's Auto Updater")
     print("[++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++]")
-    print("[*] Please Note : Git must be installed in order to use \"updater.py\"")
+    print(f"{Fore.GREEN}[*] Please Note : Git must be installed in order to use \"updater.py\"")
     time.sleep(5)
     print("[++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++]")
-    print("[*] Checking Technowlogger's version information..")
+    print(f"{Fore.YELLOW}[*] Checking Technowlogger's version information..")
     print(main())
     print("[*] Exiting ...")
