@@ -24,7 +24,7 @@ def main():
     if update_client_version(version) is True:
         subprocess.call(["git", "pull", "origin", "master"])
         with open("version.txt", "r") as j:
-            j.write(version)
+            j.write(f'{version}')
         return f"{Fore.GREEN}[+] Updated to latest version: v{version}.."
     else:
         return f"{Fore.GREEN}[*] You are already up to date with git origin master :)"
